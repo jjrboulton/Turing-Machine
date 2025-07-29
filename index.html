@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Turing Machine</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <h1>Turing Machine</h1>
+
+    <div><strong>Current State:</strong> {{ currentState }}</div>
+    <div><strong>Steps:</strong> {{ stepCount }}</div>
+    <div class="tape">
+      <div
+        v-for="(val, i) in tape"
+        :key="i"
+        class="cell"
+        :class="{ head: i === head }"
+        @click="toggleCell(i)"
+      >
+        {{ val || "_" }}
+      </div>
+    </div>
+    <button @click="expandLeft">Expand Left</button>
+    <button @click="expandRight">Expand Right</button>
+    <button @click="step">Run Step</button>
+    <button @click="run">Run</button>
+    <button @click="reset">Reset</button>
+
+
+    <h2>Transition Table</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>State</th>
+          <th>Symbol</th>
+          <th>New Symbol</th>
+          <th>Direction</th>
+          <th>Next State</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(row, i) in table" :key="i">
+          <td><input v-model="row.state" /></td>
+          <td><input v-model="row.read" /></td>
+          <td><input v-model="row.write" /></td>
+          <td>
+            <select v-model="row.move">
+              <option>L</option>
+              <option>R</option>
+            </select>
+          </td>
+          <td><input v-model="row.next" /></td>
+          <td><button @click="removeRow(i)">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <button @click="addRow">Add Row</button>
+  </div>
+
+  <script src="vue.global.prod.js"></script>
+  <script src="script.js"></script>
+  <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+  <script>
+      kofiWidgetOverlay.draw('joshuaboulton', {
+          'type': 'floating-chat',
+          'floating-chat.donateButton.text': 'Donate',
+          'floating-chat.donateButton.background-color': '#d9534f',
+          'floating-chat.donateButton.text-color': '#fff'
+      });
+  </script>
+</body>
+</html>
